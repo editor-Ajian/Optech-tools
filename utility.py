@@ -208,7 +208,7 @@ def generate_final_file(file_w_name):
 	print('程序已经跑完。optech_comptabile.md 和 primitives_comptabile.md 分别为兼容 Optech 和 PrimitivesLane 的版本。')
 
 
-extract_forms_in_Optech_file('#201.md')
+# extract_forms_in_Optech_file('#201.md')
 # generate_final_file('#199-html.md')
 # get_determiner()
 # print(extract_be_linkd_word('[ssssd](sssdd)', mode=2))

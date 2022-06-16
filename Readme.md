@@ -19,9 +19,14 @@
 5. 复制 Optech 网站对应页面的文档（其中包含了最终的 html 信息），粘贴到兼容 markdown 的编辑器内（作者使用 Typora），保存到文件夹内。注意，不应复制 “PR 审核俱乐部” 的特殊格式部分
 6. 运行 ` Main-function.py ` 执行指令 2，得到最终的版本，分别为 optech_comptabile.md 和 primitives_comptabile.md
 
-文件夹内的 #201.md、#201-web.md 和 #201-trans-test.md 是用于演示的。第一个是 optech 的原文（用于指令 1），第二个是其网页版（用于指令 2），第三个是翻译，可复制到 final_form.md 内方便执行指令 2。
+文件夹内的 #199.md、#199-html.md 和 translation-test.md 是用于演示的。第一个是 optech 的原文（用于指令 1），第二个是其网页版（用于指令 2），第三个是翻译，可复制到 final_form.md 内方便执行指令 2。
 
 ### 2022-05-21 Update
 
 - 减少了微量的重复计算
 - 使之能处理 Optech Newslatter 中的 “Bitcoin Stack Exchange 精选问答” 内的引用（ ` []() ` 格式）
+
+## 2022-06-16 Update
+
+- 增加了为加粗格式和“Bitcoin Stack Exchange 精选问答” 内的引用（ ` []() ` 格式）增加形如 “<!--eng-words-->” 的注释的功能，这些注释将为 Optech 程序的自动处理提供帮助
+- 尚不能为 “Bitcoin Core PR 审核俱乐部” 栏目自动添加注释（此前也不能为 PrimitivesLane 版本自动转换其中的内容）。需要考虑专门写一个程序来处理

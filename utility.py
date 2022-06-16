@@ -1,3 +1,5 @@
+import string
+
 def inclusion_check(para:str, tag:list):
 	for element in tag:
 		if element in para:
@@ -46,11 +48,27 @@ def remove_huanhangfu(a_form):
 	return new_item
 
 
+def dasher(en_words):
+	for i in string.punctuation:
+		en_words = en_words.replace(i, '')
+	txt_1 = en_words.replace(' ', '-')
+	txt_1 = '<!--{}-->'.format(txt_1)
+	return txt_1
+
+
 def add_order_number(check, form_item):
 	some_A, some_B = extract_be_linkd_word(form_item, 2)
 	form_str = '%#{}%#-[{}]{}'.format(str(check+1), some_A, some_B)
 	table_str = '%#{}%#,{},{},'.format(str(check+1), some_A, some_B)
 	return form_str, table_str
+
+
+def step_pusher(text, mark_loc, identifer):
+	start_loc = mark_loc + len(identifer)
+	end_pusher = text[start_loc:].find(identifer)
+	catched = text[start_loc:start_loc + end_pusher]
+	end_loc = start_loc + end_pusher + len(identifer)	
+	return catched, end_loc
 
 
 def write_str_to_a_file(file_name, target_str):
@@ -91,6 +109,13 @@ def extract_forms_in_Optech_file(file_name):
 				special_form.append(a_form_item)
 				content = content[new_start:]
 				break
+			elif content[loc] == '*':
+				if content[loc:loc+2] == '**':
+					a_form_item, new_start = step_pusher(content, loc, '**')
+					a_form_item = '**{}**'.format(dasher(a_form_item))
+					special_form.append(a_form_item)
+					content = content[new_start:]
+					break
 
 	#print(special_form)
 	final_form = '\n\n'.join(special_form)
@@ -163,14 +188,17 @@ def generate_final_file(file_w_name):
 
 	for entry in final_table:
 		chips = entry.split(',')
-		optech_hyperlink = '[{}]{}'.format(chips[3], chips[2])
+		if chips[2][-1] == ')':
+			optech_hyperlink = '[{}{}]{}'.format(dasher(chips[1]), chips[3], chips[2])
+		else:
+			optech_hyperlink = '[{}]{}'.format(chips[3], chips[2])
 		optech_translation = optech_hyperlink.join(optech_translation.split(chips[0]))
 		
 		if chips[2] not in be_covered_refer:
 			primitives_hyperlink = '[{}][{}]'.format(chips[3], chips[1])
 			bottom_addition += '[{}]: {}\n'.format(chips[1], chips[4])
 		else:
-			primitives_hyperlink = optech_hyperlink
+			primitives_hyperlink = '[{}]{}'.format(chips[3], chips[2])
 		primitives_translation = primitives_hyperlink.join(primitives_translation.split(chips[0]))
 
 	primitives_translation += bottom_addition
@@ -180,7 +208,7 @@ def generate_final_file(file_w_name):
 	print('程序已经跑完。optech_comptabile.md 和 primitives_comptabile.md 分别为兼容 Optech 和 PrimitivesLane 的版本。')
 
 
-# extract_forms_in_Optech_file('#201.md')
+extract_forms_in_Optech_file('#201.md')
 # generate_final_file('#199-html.md')
 # get_determiner()
 # print(extract_be_linkd_word('[ssssd](sssdd)', mode=2))

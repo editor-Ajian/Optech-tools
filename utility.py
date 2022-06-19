@@ -49,6 +49,7 @@ def remove_huanhangfu(a_form):
 
 
 def dasher(en_words):
+	en_words = en_words.lower()
 	for i in string.punctuation:
 		en_words = en_words.replace(i, '')
 	txt_1 = en_words.replace(' ', '-')

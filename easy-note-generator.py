@@ -7,7 +7,7 @@ import utility
 def easy_to_generate():
 	while True:
 		en_words = input('请输入需要转化成注释的英文字符串，按回车结束：')
-		print(utility.dasher())
+		print(utility.dasher(en_words))
 
 
 if __name__ == '__main__':

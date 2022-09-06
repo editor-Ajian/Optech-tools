@@ -151,7 +151,9 @@ def use_html_to_fill_table(file_w_name):
 		list_of_entry = table_text.split('\n')
 		for n in range(0, len(list_of_entry)):
 			shares = list_of_entry[n].split(',')
-			# print(shares)
+			if shares[2] == '[]' and shares[3] != '':
+				shares[2] = '[{}]'.format(shares[1]) 
+			
 			if shares[-1] == '':
 				list_of_entry[n] += shares[1]
 			

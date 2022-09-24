@@ -152,7 +152,8 @@ def use_html_to_fill_table(file_w_name):
 		for n in range(0, len(list_of_entry)):
 			shares = list_of_entry[n].split(',')
 			if shares[2] == '[]' and shares[3] != '':
-				shares[2] = '[{}]'.format(shares[1]) 
+				wjxn = '[{}]'.format(shares[1]) 
+				list_of_entry[n] = wjxn.join(list_of_entry[n].split('[]'))
 			
 			if shares[-1] == '':
 				list_of_entry[n] += shares[1]
@@ -212,7 +213,7 @@ def generate_final_file(file_w_name):
 
 
 # extract_forms_in_Optech_file('#201.md')
-# generate_final_file('#199-html.md')
+generate_final_file('213-web.md')
 # get_determiner()
 # print(extract_be_linkd_word('[ssssd](sssdd)', mode=2))
 

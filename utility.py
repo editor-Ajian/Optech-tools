@@ -213,7 +213,7 @@ def generate_final_file(file_w_name):
 
 
 # extract_forms_in_Optech_file('#201.md')
-generate_final_file('213-web.md')
+# generate_final_file('213-web.md')
 # get_determiner()
 # print(extract_be_linkd_word('[ssssd](sssdd)', mode=2))
 

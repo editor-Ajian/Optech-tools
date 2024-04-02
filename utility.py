@@ -72,6 +72,14 @@ def step_pusher(text, mark_loc, identifer):
 	return catched, end_loc
 
 
+def head_shorthand(para):
+	parts = para.split("\n---\n")
+	head = parts[0] + "\n---\n"
+	length_head = len(head)
+	reserve_para = para[length_head:]
+	return head, reserve_para
+
+
 def write_str_to_a_file(file_name, target_str):
 	# 将字符串写入文档
 	with open(file_name, 'w', encoding='utf-8') as f:
@@ -81,15 +89,19 @@ def write_str_to_a_file(file_name, target_str):
 def extract_forms_in_Optech_file(file_name):
 	with open(file_name, 'r', encoding='utf-8') as f:
 		content = f.read()
-	#print(content)
+	# print(content)
 
 	references = ''
 	stop_iden = reversed_xiabiao(content, '}')
 	references = content[stop_iden+2:]
 	# print(references)
 	content = content[:stop_iden+1]
+	# print(content)
 
-	special_form = []
+	# extract head
+	head, content = head_shorthand(content)
+
+	special_form = [head]
 	order_table = []
 	order_number = 1
 	while '}' in content:
@@ -105,7 +117,7 @@ def extract_forms_in_Optech_file(file_name):
 				content = content[new_start:]
 				break
 			elif content[loc] == '{':
-				a_form_item, new_start = get_a_item_via_location(content, loc, '}', ['%'])
+				a_form_item, new_start = get_a_item_via_location(content, loc, '}', ['%', ':'])
 				# print(a_form_item)
 				special_form.append(a_form_item)
 				content = content[new_start:]
@@ -118,7 +130,7 @@ def extract_forms_in_Optech_file(file_name):
 					content = content[new_start:]
 					break
 
-	#print(special_form)
+	# print(special_form)
 	final_form = '\n\n'.join(special_form)
 	final_form = final_form + '\n' + references
 	write_str_to_a_file('final_form.md', final_form)
@@ -212,7 +224,7 @@ def generate_final_file(file_w_name):
 	print('程序已经跑完。optech_comptabile.md 和 primitives_comptabile.md 分别为兼容 Optech 和 PrimitivesLane 的版本。')
 
 
-# extract_forms_in_Optech_file('#201.md')
+# extract_forms_in_Optech_file('281-march.md')
 # generate_final_file('213-web.md')
 # get_determiner()
 # print(extract_be_linkd_word('[ssssd](sssdd)', mode=2))

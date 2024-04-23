@@ -72,11 +72,19 @@ def step_pusher(text, mark_loc, identifer):
 	return catched, end_loc
 
 
+def deal_with_head(text):
+	text = text.replace('en', 'zh')
+	text = text.replace('-newsletter', '-newsletter-zh')
+	return text
+
+
 def head_shorthand(para):
 	parts = para.split("\n---\n")
 	head = parts[0] + "\n---\n"
 	length_head = len(head)
 	reserve_para = para[length_head:]
+
+	head = deal_with_head(head)
 	return head, reserve_para
 
 
